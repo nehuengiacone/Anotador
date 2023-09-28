@@ -47,3 +47,7 @@ sc.config(command=grid.get_grid().yview)
 
 root.get_ventana().after(3000, seleccion)
 root.correr_ventana()
+
+
+
+
