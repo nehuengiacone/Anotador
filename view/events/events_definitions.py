@@ -13,13 +13,9 @@ from controllers import controllers_definitions
 
 
 # FUNCIONES DE EVENTOS PARA BUTTONS
-# def event_button(button, *args):
-#   ... code
 
 
 # FUNCIONES DE EVENTOS PARA GRIDS
 
 
 # FUNCIONES DE EVENTOS PARA ENTRIES
-# def event_entry(entry, *args):
-#   ... codeX

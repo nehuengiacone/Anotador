@@ -5,8 +5,7 @@ sys.path.insert(1, ".")
 
 
 # IMPORTACIONES
-import classes.Grid
-import tkinter
+from classes import Boton
 from controllers import controllers_definitions
 from windows import windows_definitions
 from frames import frames_definitions
@@ -19,8 +18,9 @@ from events import events_definitions
 
 
 # INSTANCIAS DE WIDGEDTS
-
+# btn_ingresar = Boton.Boton(ventana=windows_definitions.login, texto="Ingresar", bgcolor="lightblue")
 
 # CREACION DE WIDGETS
+# btn_ingresar.crear_boton(200, 200)
 
 

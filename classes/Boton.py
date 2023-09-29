@@ -1,12 +1,12 @@
 import tkinter
-import Ventana
-import Marcos
+import classes.Ventana
+import classes.Marcos
 
 class Boton:
 
     __boton = None
-    __ventana_root:Ventana.Ventana = None
-    __marco_root:Marcos.Marco = None
+    __ventana_root:classes.Ventana.Ventana = None
+    __marco_root:classes.Marcos.Marco = None
     __texto:str = 'Boton'
     __width:int = 0
     __height:int = 0
@@ -25,7 +25,7 @@ class Boton:
     # __cursor:str []                   a desarrollar
 
 
-    def __init__(self, ventana:Ventana.Ventana=None, marco:Marcos.Marco=None, texto:str='', width:int=0, height:int=0, estado:bool=True, bgcolor:str=None, fgcolor:str=None, borde:int=0, tborde:str=''): 
+    def __init__(self, ventana:classes.Ventana.Ventana=None, marco:classes.Marcos.Marco=None, texto:str='', width:int=0, height:int=0, estado:bool=True, bgcolor:str=None, fgcolor:str=None, borde:int=0, tborde:str=''): 
         
         if(ventana == None):
             self.__marco_root = marco.get_marco()
@@ -57,9 +57,9 @@ class Boton:
     def crear_boton(self, x:int=0, y:int=0):
         
         if(self.__ventana_root != None):
-            self.__boton = tkinter.Button(self.__ventana_root, text=self.__texto, width=self.__width, height=self.__height, state=self.__estado)
+            self.__boton = tkinter.Button(ventana=self.__ventana_root, text=self.__texto, width=self.__width, height=self.__height, state=self.__estado)
         else:
-            self.__boton = tkinter.Button(self.__marco_root, text=self.__texto, width=self.__width, height=self.__height, state=self.__estado)
+            self.__boton = tkinter.Button(marco=self.__marco_root, text=self.__texto, width=self.__width, height=self.__height, state=self.__estado)
 
         self.__boton.config(bg=self.__background_color, fg=self.__foreground_color, borderwidth=self.__borde, relief=self.__tborde)
 

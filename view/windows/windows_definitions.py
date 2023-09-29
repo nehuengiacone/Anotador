@@ -1,11 +1,13 @@
-import  classes.Ventana
+import sys
+sys.path.insert(0, '.')
 
+from classes import Ventana
 
 
 # INSTANCIAS DE VENTANA
 #instancia de ventana principal
-root = classes.Ventana.Ventana(width=500, height=800, completa=False, maximiza=True)
-
+root = Ventana.Ventana(width=500, height=500, titulo="Anotador - Login", root=True, completa=False, maximiza=False)
+# root = Ventana.Ventana(width=500, height=500, titulo="Anotador - Main", root=False, completa=False, maximiza=False)
 
 
 
