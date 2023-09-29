@@ -1,12 +1,12 @@
 # RUTEO DE DIRECTORIOS
 import sys
-sys.path.insert(0, ".")
+sys.path.insert(0, "./view")
 
 
 # IMPORTACIONES
-from view.frames import frames_definitions
-from view.widgets import widgets_definitions
-from view.windows import windows_definitions
+from frames import frames_definitions
+from widgets import widgets_definitions
+from windows import windows_definitions
 
 
 

@@ -49,6 +49,7 @@ class Entrada:
             self.__entrada.configure(textvariable=self.__value_entrada)
             self.__value_entrada.set(self.__value)
 
+        # self.__entrada.pack(padx=x, pady=y, ipadx=5, ipady=5)
         self.__entrada.place(x=x, y=y)
             
 
