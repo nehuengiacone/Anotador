@@ -20,7 +20,7 @@ class Grid:
     __fila_seleccionada = None
 
     def __init__(self, ventana:classes.Ventana.Ventana=None, marco:classes.Marcos.Marco=None, encabezados:tuple = (), width:int=100, align:str="top"):
-
+        self.__columnas = []
         if(ventana != None):
             self.__ventana_root = ventana.get_ventana()
         else:
@@ -75,13 +75,12 @@ class Grid:
         for head, column in zip(self.__encabezados, self.__columnas):
             self.__grid.heading(column, text=head, anchor=tkinter.CENTER)
             col += 1
-
+            print(f"{head} /espacio/  {column}")
         # ipadx=self.__ventana_root.get_dimension()["width"] 
         self.__grid.pack(side=self.__align, fill="x", expand=False, ipady=30)
         self.__grid.pack_configure(padx=0, pady=10)
 
         self.__grid.configure(selectmode="browse")
-
         
 
         
@@ -117,3 +116,4 @@ class Grid:
     def get_info_fila_seleccionada(fila:tuple):
         """Retorno de los datos recuperados en el metodo 'fila_seleccionada'. (informativo)"""
         return fila
+    

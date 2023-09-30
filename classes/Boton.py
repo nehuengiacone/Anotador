@@ -69,5 +69,8 @@ class Boton:
         return {"x": coord_x, "y": coord_y}
 
 
-    def evento_nueva_ventana(self, evento):
-        self.__boton.config(command=evento)
+    def evento(self, evento=None, wevento=None, widget=None):
+        if(wevento == None):
+            self.__boton.config(command=evento)
+        else:
+            self.__boton.config(command=lambda:wevento(widget))
