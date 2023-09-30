@@ -39,11 +39,11 @@ def call_login():
 #MAIN CALL
 def call_main():
     # INSTANCIAS DE WIDGETS
-    btn_crear_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Crear Nota", bgcolor='lightblue', borde=2, tborde='raised')
+    btn_crear_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Crear Nota", bgcolor='pale green', borde=2, tborde='raised')
     btn_buscar_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Buscar Nota", bgcolor='lightblue', borde=2, tborde='raised')
     btn_listar_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Listar Nota", bgcolor='lightblue', borde=2, tborde='raised')
     btn_modificar_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Modificar Nota", bgcolor='lightblue', borde=2, tborde='raised')
-    btn_salir = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Salir", bgcolor='lightblue', borde=2, tborde='raised')
+    btn_salir = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Salir", bgcolor='light coral', borde=2, tborde='raised')
 
     # CREACION DE WIDGETS
     btn_crear_nota.crear_boton(20, 50)
