@@ -19,6 +19,10 @@ def entrar_menu_principal():
     windows_definitions.main.crear_ventana()
     widgets_definitions.call_main()
 
+def entrar_crear_cuenta():
+    windows_definitions.crear_cuenta.crear_ventana(windows_definitions.root.get_ventana())
+    widgets_definitions.crear_cuenta_call()
+
 def cerrar_programa():
     windows_definitions.main.cerrar_ventana()
 
@@ -49,5 +53,8 @@ def listar_notas():
 def buscar_nota(widget:Grilla.Grid=None):
     widget.insertar_filas([["compra","30/09/2023"]])
 
+def seleccionar(widget:Grilla.Grid=None):
+    windows_definitions.nota.crear_ventana(windows_definitions.buscar_nota.get_ventana())
+    widgets_definitions.nota_view_call()
 
 # FUNCIONES DE EVENTOS PARA ENTRIES

@@ -1,5 +1,5 @@
-# import sys
-# sys.path.insert(0, '.')
+import sys
+sys.path.insert(0, './view')
 
 from classes import Ventana
 
@@ -7,6 +7,7 @@ from classes import Ventana
 # INSTANCIAS DE VENTANA
 #instancia de ventana principal
 root = Ventana.Ventana(width=400, height=300, titulo="Anotador - Login", root=True, completa=False, maximiza=False, background_color="lightyellow", icono="assets/imgs/icono.ico")
+crear_cuenta = Ventana.Ventana(width=400, height=300, titulo="Anotador - Crear Cuenta", root=False, completa=False, maximiza=False, background_color="lightyellow", icono="assets/imgs/icono.ico")
 main = Ventana.Ventana(width=400, height=300, titulo="Anotador - Main", root=True, completa=False, maximiza=False, background_color="lightyellow", icono="assets/imgs/icono.ico")
 crear_nota = Ventana.Ventana(width=400, height=600, titulo="Anotador - Crear Nota", root=False, completa=False, maximiza=False, background_color="lightyellow", icono="assets/imgs/icono.ico")
 modificar_nota = Ventana.Ventana(width=400, height=600, titulo="Anotador - Modificar Nota", root=False, completa=False, maximiza=False, background_color="lightyellow", icono="assets/imgs/icono.ico")
@@ -23,7 +24,6 @@ root.crear_ventana()
 # RUN DEF
 def run():
     root.correr_ventana()
-
 
 
 
