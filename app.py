@@ -1,6 +1,6 @@
 # RUTEO DE DIRECTORIOS
 import sys
-sys.path.insert(0, "./view/")
+sys.path.insert(0, "./view")
 
 
 # IMPORTACIONES
