@@ -74,3 +74,7 @@ class Boton:
             self.__boton.config(command=evento)
         else:
             self.__boton.config(command=lambda:wevento(widget))
+
+
+    def get_boton(self):
+        return self.__boton

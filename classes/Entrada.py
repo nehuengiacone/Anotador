@@ -46,18 +46,18 @@ class Entrada:
         
         if(self.__value != None):
             self.__value_entrada = tkinter.StringVar()
-            self.__entrada.configure(textvariable=self.__value_entrada)
             self.__value_entrada.set(self.__value)
+            self.__entrada.configure(textvariable=self.__value_entrada)
 
         # self.__entrada.pack(padx=x, pady=y, ipadx=5, ipady=5)
         self.__entrada.place(x=x, y=y)
-            
+        # print(self.__entrada.get()) 
 
     def get_entrada(self):
         return self.__entrada
     
     def get_valor(self):
-        return self.__value_entrada.get()
+        return self.__entrada.get()
     
-    def set_valor(self, value):
-        self.__value_entrada.set(value)
+    def set_valor(self):
+        self.__value_entrada.set()

@@ -9,6 +9,7 @@ from classes import Boton, Entrada, Grilla
 from tkinter import *
 from PIL import Image, ImageTk
 from controllers import controllers_definitions
+from controllers.apps import Usuario 
 from windows import windows_definitions
 from frames import frames_definitions
 from events import events_definitions
@@ -39,13 +40,18 @@ def call_login():
     ent_clave.crear_entrada(110, 110)
     btn_ingresar.crear_boton(55, 150)
     btn_crear_cuenta.crear_boton(55, 220)
-    btn_ingresar.evento(events_definitions.entrar_menu_principal)
+    # btn_ingresar.evento(events_definitions.entrar_menu_principal)
+    btn_ingresar.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_menu_principal_validacion(event, [ent_usuario.get_valor(), ent_clave.get_valor()]))
     btn_crear_cuenta.evento(events_definitions.entrar_crear_cuenta)
 
+
+
+
+
 #MAIN CALL
-def call_main():
+def call_main(usuario:Usuario.Usuario):
     # INSTANCIAS DE WIDGETS
-    
+    print(f"BIENVENIDO {usuario.get_nombre()}!!!! {usuario.get_id()}")
     btn_crear_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Crear Nota", bgcolor='pale green', borde=2, tborde='raised')
     btn_buscar_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Buscar Nota", bgcolor='lightblue', borde=2, tborde='raised')
     btn_listar_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Listar Nota", bgcolor='lightblue', borde=2, tborde='raised')
@@ -58,21 +64,25 @@ def call_main():
     btn_listar_nota.crear_boton(260, 50)
     # btn_modificar_nota.crear_boton(260, 130)
     btn_salir.crear_boton(260, 130)
-    btn_crear_nota.evento(events_definitions.entrar_crear_nota)
+    # btn_crear_nota.evento(events_definitions.entrar_crear_nota)
+    btn_crear_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_crear_nota(event, usuario))
     # btn_modificar_nota.evento(events_definitions.entrar_modificar_nota)
     btn_buscar_nota.evento(events_definitions.entrar_buscar_nota)
     btn_listar_nota.evento(events_definitions.listar_notas)
     btn_salir.evento(events_definitions.cerrar_programa)
 
+
+
+
+
 #CREAR CUENTA CALL
 def crear_cuenta_call():
-
     lbl_usuario = Label(windows_definitions.crear_cuenta.get_ventana(), text="Usuario")
     ent_usuario = Entrada.Entrada(ventana=windows_definitions.crear_cuenta, width=40, value="Usuario ...")
     lbl_clave1 = Label(windows_definitions.crear_cuenta.get_ventana(), text="Clave")
     ent_clave = Entrada.Entrada(ventana=windows_definitions.crear_cuenta, width=40, value="Clave ...", pwd=True)
     lbl_clave2 = Label(windows_definitions.crear_cuenta.get_ventana(), text="Repetir clave")
-    ent_repeat_clave = Entrada.Entrada(ventana=windows_definitions.crear_cuenta, width=40, value="Clave ...", pwd=True)
+    ent_repeat_clave = Entrada.Entrada(ventana=windows_definitions.crear_cuenta, width=40, value="Repetir clave ...", pwd=True)
     btn_crear_cuenta = Boton.Boton(ventana=windows_definitions.crear_cuenta, width=40, height=2, texto="Registrar Cuenta", bgcolor="pale green", borde=3, tborde='raised')
 
     lbl_usuario.place(x=80, y=30)
@@ -82,12 +92,15 @@ def crear_cuenta_call():
     lbl_clave2.place(x=80, y=130)
     ent_repeat_clave.crear_entrada(80, 150)
     btn_crear_cuenta.crear_boton(55, 200)
+    btn_crear_cuenta.get_boton().bind("<Button-1>", lambda event:events_definitions.crear_cuenta_crear_usuario(event, [ent_usuario.get_valor(), ent_clave.get_valor(), ent_repeat_clave.get_valor()]))
+
 
 
 
 #CREAR NOTA CALL
-def crear_nota_call():
+def crear_nota_call(usuario:Usuario.Usuario):
     # INSTANCIAS DE WIDGETS
+    v_txt_cuerpo = StringVar().set('')
     ent_titulo = Entrada.Entrada(ventana=windows_definitions.crear_nota, width=40, value="Titulo ...")
     btn_crear_nota = Boton.Boton(ventana=windows_definitions.crear_nota, width=30, height=2, texto="Guardar", bgcolor='lightblue', borde=2, tborde='raised')
     txt_cuerpo = Text(windows_definitions.crear_nota.get_ventana(), width=40)
@@ -96,6 +109,13 @@ def crear_nota_call():
     ent_titulo.crear_entrada(80, 20)
     txt_cuerpo.place(x=40, y=50)
     btn_crear_nota.crear_boton(90, 500)
+    btn_crear_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.crear_nota_crear_nota(event, [ent_titulo.get_valor(), txt_cuerpo.get('1.0', "end-1c")], usuario))
+
+
+
+
+
+
 
 #BUSCAR NOTA CALL
 def buscar_nota_call():
@@ -112,6 +132,12 @@ def buscar_nota_call():
     grid_resultados.crear_grid()
     btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)
     grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.seleccionar(widget=grid_resultados))
+
+
+
+
+
+
 
 #LISTAR NOTA CALL
 def listar_notas_call():
@@ -132,6 +158,10 @@ def listar_notas_call():
 
 
 
+
+
+
+
 #MODIFICAR NOTA CALL
 def modificar_nota_call():
     # INSTANCIAS DE WIDGETS
@@ -146,6 +176,11 @@ def modificar_nota_call():
     btn_modificar_nota.evento(events_definitions.guardar_nota)
 
 
+
+
+
+
+
 #NOTA CALL
 def nota_call():
     # INSTANCIAS DE WIDGETS
@@ -156,6 +191,11 @@ def nota_call():
     # CREACION DE WIDGETS
     txt_cuerpo.place(x=2, y=1)
 
+
+
+
+
+
 #NOTA VIEW CALL
 def nota_view_call():
     # INSTANCIAS DE WIDGETS
@@ -165,6 +205,10 @@ def nota_view_call():
 
     # CREACION DE WIDGETS
     txt_cuerpo.place(x=2, y=1)
+
+
+
+
 
 #PRIMERA CALL
 call_login()
