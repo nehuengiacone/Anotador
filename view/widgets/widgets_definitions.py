@@ -1,7 +1,7 @@
 # RUTEO DE DIRECTORIOS
 import sys
 sys.path.insert(0, "./view")
-sys.path.insert(1, ".")
+# sys.path.insert(0, ".")
 
 
 # IMPORTACIONES
@@ -41,6 +41,8 @@ def call_login():
     btn_ingresar.crear_boton(55, 150)
     btn_crear_cuenta.crear_boton(55, 220)
     # btn_ingresar.evento(events_definitions.entrar_menu_principal)
+
+    # LLAMADA A EVENTOS
     btn_ingresar.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_menu_principal_validacion(event, [ent_usuario.get_valor(), ent_clave.get_valor()]))
     btn_crear_cuenta.evento(events_definitions.entrar_crear_cuenta)
 
@@ -64,6 +66,8 @@ def call_main(usuario:Usuario.Usuario):
     btn_listar_nota.crear_boton(260, 50)
     # btn_modificar_nota.crear_boton(260, 130)
     btn_salir.crear_boton(260, 130)
+
+    # LLAMADA A EVENTOS
     # btn_crear_nota.evento(events_definitions.entrar_crear_nota)
     btn_crear_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_crear_nota(event, usuario))
     # btn_buscar_nota.evento(events_definitions.entrar_buscar_nota)
@@ -93,6 +97,8 @@ def crear_cuenta_call():
     lbl_clave2.place(x=80, y=130)
     ent_repeat_clave.crear_entrada(80, 150)
     btn_crear_cuenta.crear_boton(55, 200)
+
+    # LLAMADA A EVENTOS
     btn_crear_cuenta.get_boton().bind("<Button-1>", lambda event:events_definitions.crear_cuenta_crear_usuario(event, [ent_usuario.get_valor(), ent_clave.get_valor(), ent_repeat_clave.get_valor()]))
 
 
@@ -110,6 +116,8 @@ def crear_nota_call(usuario:Usuario.Usuario):
     ent_titulo.crear_entrada(80, 20)
     txt_cuerpo.place(x=40, y=50)
     btn_crear_nota.crear_boton(90, 500)
+
+    # LLAMADA A EVENTOS
     btn_crear_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.crear_nota_crear_nota(event, [ent_titulo.get_valor(), txt_cuerpo.get('1.0', "end-1c")], usuario))
 
 
@@ -133,7 +141,8 @@ def buscar_nota_call(usuario:Usuario.Usuario):
     btn_buscar.crear_boton(x=190, y=50)
     grid_resultados.crear_grid()
     # btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)
-   
+
+    # LLAMADA A EVENTOS
     btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.buscar_nota_por_titulo(event, grid_resultados, ent_buscar.get_valor(), usuario))
     grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.buscar_nota_por_titulo_seleccionar(event, grid_resultados.fila_seleccionada(), events_definitions.notas))
     windows_definitions.buscar_nota.get_ventana().protocol("WM_DELETE_WINDOW", lambda:events_definitions.buscar_nota_reset_notas(grid_resultados))
@@ -159,6 +168,7 @@ def listar_notas_call(usuario:Usuario.Usuario):
     grid_resultados.crear_grid()
     # btn_buscar.evento(wevento=events_definitions.buscar_nota_por_titulo, widget=grid_resultados)    
    
+    # LLAMADA A EVENTOS
     btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.listar_notas_listar(event, grid_resultados, usuario))
     grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.listar_notas_listar_seleccionar(event, grid_resultados.fila_seleccionada(), events_definitions.notas))
     btn_modificar_nota.evento(events_definitions.entrar_modificar_nota)
@@ -182,6 +192,8 @@ def modificar_nota_call():
     ent_titulo.crear_entrada(80, 20)
     txt_cuerpo.place(x=40, y=50)
     btn_modificar_nota.crear_boton(90, 500)
+
+    # LLAMADA A EVENTOS
     btn_modificar_nota.evento(events_definitions.guardar_nota)
 
 
@@ -214,6 +226,11 @@ def nota_view_call(key):
 
     # CREACION DE WIDGETS
     txt_cuerpo.place(x=2, y=1)
+    txt_cuerpo.pack(fill="both", expand=1)
+
+    # LLAMADA A EVENTOS
+    windows_definitions.nota.get_ventana().bind("<Control-f>", lambda event:events_definitions.nota_view_maximiza(event))
+    windows_definitions.nota.get_ventana().bind("<Escape>", windows_definitions.nota.cerrar_ventana)
 
 
 

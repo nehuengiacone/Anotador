@@ -131,6 +131,10 @@ def guardar_nota():
 def listar_notas(evento, usuario:Usuario.Usuario):
     windows_definitions.listar_notas.crear_ventana(windows_definitions.main.get_ventana())
     widgets_definitions.listar_notas_call(usuario)
+
+def nota_view_maximiza(evento):
+    print("pase por el evento")
+    windows_definitions.nota.set_cambio_dimension()
     
 
 
