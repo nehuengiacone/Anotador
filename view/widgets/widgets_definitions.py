@@ -9,7 +9,7 @@ from classes import Boton, Entrada, Grilla
 from tkinter import *
 from PIL import Image, ImageTk
 from controllers import controllers_definitions
-from controllers.apps import Usuario 
+from controllers.apps import Usuario, Nota 
 from windows import windows_definitions
 from frames import frames_definitions
 from events import events_definitions
@@ -68,7 +68,8 @@ def call_main(usuario:Usuario.Usuario):
     btn_crear_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_crear_nota(event, usuario))
     # btn_buscar_nota.evento(events_definitions.entrar_buscar_nota)
     btn_buscar_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_buscar_nota(event, usuario))
-    btn_listar_nota.evento(events_definitions.listar_notas)
+    # btn_listar_nota.evento(events_definitions.listar_notas)
+    btn_listar_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.listar_notas(event, usuario))
     btn_salir.evento(events_definitions.cerrar_programa)
 
 
@@ -119,6 +120,7 @@ def crear_nota_call(usuario:Usuario.Usuario):
 
 #BUSCAR NOTA CALL
 def buscar_nota_call(usuario:Usuario.Usuario):
+    print(events_definitions.notas)
     # INSTANCIAS DE WIDGETS
     lbl_titulo = Label(windows_definitions.buscar_nota.get_ventana(), text="Titulo")
     ent_buscar = Entrada.Entrada(ventana=windows_definitions.buscar_nota, width=40, value="Buscar por Titulo ...")
@@ -132,7 +134,8 @@ def buscar_nota_call(usuario:Usuario.Usuario):
     grid_resultados.crear_grid()
     # btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)
     btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.buscar_nota_por_titulo(event, grid_resultados, ent_buscar.get_valor(), usuario))
-    grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.seleccionar(event, grid_resultados))
+    grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.buscar_nota_por_titulo_seleccionar(event, grid_resultados.fila_seleccionada(), events_definitions.notas))
+    windows_definitions.buscar_nota.get_ventana().protocol("WM_DELETE_WINDOW", lambda:events_definitions.reset_notas(grid_resultados))
 
 
 
@@ -199,10 +202,10 @@ def nota_call():
 
 
 #NOTA VIEW CALL
-def nota_view_call():
+def nota_view_call(key):
     # INSTANCIAS DE WIDGETS
     txt_cuerpo = Text(windows_definitions.nota.get_ventana(), width=40, height=20, state="normal")
-    txt_cuerpo.insert(END, "Hola Mundo!!!!")
+    txt_cuerpo.insert(END, events_definitions.notas[key].get_cuerpo())
     txt_cuerpo.configure(state="disabled", bg="lightgrey")
 
     # CREACION DE WIDGETS

@@ -4,7 +4,7 @@ sys.path.insert(0, ".")
 
 # IMPORTACIONES
 from models import repositories_definitions
-
+from controllers.apps import Nota
 
 
 # DEFINICION DE CLASES CONTROLADORAS   
@@ -67,8 +67,7 @@ class NotaController:
 
     def get_notas_por_titulo(self, titulo:str, idusuario:int):
         return self.__nota_repositorio.get_notas_por_titulo(titulo, idusuario)
-    
-
+        
 
 # nc = NotaController()
 

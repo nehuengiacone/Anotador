@@ -8,11 +8,12 @@ from classes import Grilla, Entrada
 from widgets import widgets_definitions
 from windows import windows_definitions
 from controllers import controllers_definitions
-from controllers.apps import Usuario
+from controllers.apps import Usuario, Nota
 
 
 
-
+# VARIABLES GLOBALES
+notas = {}
 
 # FUNCIONES DE EVENTOS PARA BUTTONS
 def entrar_menu_principal_validacion(evento, entradas):
@@ -106,9 +107,9 @@ def guardar_nota():
 
 
 
-def listar_notas():
+def listar_notas(evento, usuario:Usuario.Usuario):
     windows_definitions.listar_notas.crear_ventana(windows_definitions.main.get_ventana())
-    widgets_definitions.listar_notas_call()
+    widgets_definitions.listar_notas_call(usuario)
     
 
 
@@ -120,17 +121,35 @@ def buscar_nota_por_titulo(evento, widget:Grilla.Grid, titulo:str, usuario:Usuar
     resultado = nota_controller.get_notas_por_titulo(titulo, usuario.get_id())
     if(resultado[1]):
         for registros in resultado[0]:
-            widget.insertar_filas([[registros[1],registros[3]]])
-
+            nota = Nota.Nota(registros[1], registros[2])
+            id_fila = widget.insertar_fila([registros[1],registros[3]])
+            notas.setdefault(id_fila, nota)
     else:
         print("No se recuperó nada")
 
 
 
 
-def seleccionar(event, widget:Grilla.Grid):
-    windows_definitions.nota.crear_ventana(windows_definitions.buscar_nota.get_ventana())
-    widgets_definitions.nota_view_call()
+def buscar_nota_por_titulo_seleccionar(event, seleccion:tuple, notas:dict):
+    if(seleccion[0] != ()):
+        if(seleccion[0][0] in notas.keys()):
+            print("Existe key para nota seleccionada")
+            key = seleccion[0][0]
+            windows_definitions.nota.crear_ventana(windows_definitions.buscar_nota.get_ventana())
+            widgets_definitions.nota_view_call(key)
+        else:
+            print("No existe key")
+    else:
+        print("No existe seleccion")
+
+
+
+def reset_notas(grid:Grilla.Grid):
+    print(notas)
+    notas.clear()
+    grid.get_grid().delete(*grid.get_grid().get_children())
+    print(notas)
+    windows_definitions.buscar_nota.cerrar_ventana()
 
 # FUNCIONES DE EVENTOS PARA ENTRIES
 

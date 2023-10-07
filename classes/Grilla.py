@@ -18,6 +18,7 @@ class Grid:
     __align = None
     __alignarr = ["top", "bottom", "left", "right"]
     __fila_seleccionada = None
+    __id_fila = []
 
     def __init__(self, ventana:classes.Ventana.Ventana=None, marco:classes.Marcos.Marco=None, encabezados:tuple = (), width:int=100, align:str="top"):
         self.__columnas = []
@@ -90,8 +91,15 @@ class Grid:
         # filas_datos es una lista compuesta por listas donde cada una es una fila con sus datos por columnas.
         # values de insert acepta listas, por lo que la fila a insertar, es una lista de filas_datos.
         for fila in filas_datos:
-            print(self.__grid.insert(parent="", index="end", iid=None, values=fila))
-      
+            # print(self.__grid.insert(parent="", index="end", iid=None, values=fila))
+            self.__id_fila.append(self.__grid.insert(parent="", index="end", iid=None, values=fila))
+
+    def insertar_fila(self, fila_datos:list):
+        id_fila = self.__grid.insert(parent="", index="end", iid=None, values=fila_datos)
+        self.__id_fila.append(id_fila)
+        
+        return id_fila
+
 
     def get_grid(self):
         """Retorno del objeto Grid para futura manipulación."""
@@ -103,17 +111,21 @@ class Grid:
 
         # obtengo los datos de la fila seleccionada
         seleccion = self.__grid.selection()
-        print(seleccion)
+        # print(seleccion)
 
         if seleccion:
             self.__fila_seleccionada = self.__grid.item(seleccion)['values']
-            print(self.__fila_seleccionada)
+            # print(self.__fila_seleccionada)
+            return (seleccion, self.__fila_seleccionada)
         else:
             print("nada")
+            return ((), None)
     
 
 
-    def get_info_fila_seleccionada(fila:tuple):
+    def get_info_fila_seleccionada(self):
         """Retorno de los datos recuperados en el metodo 'fila_seleccionada'. (informativo)"""
-        return fila
+        return self.__fila_seleccionada
     
+    def get_filas_id(self):
+        return self.__id_fila
