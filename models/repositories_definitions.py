@@ -18,15 +18,19 @@ class UsuarioRepositorio:
         self.__connex.connection_start(True)
         
     def guardar_usuario(self, nombre, clave):
+        try:
+            cursor = self.__connex.get_connection().cursor()
+            query = f"insert into usuarios(nombre, clave) values(%s, %s)"
+            query_data = (nombre, clave)
+            cursor.execute(query, query_data)
+            self.__connex.get_connection().commit()
+            cursor.close()
+            self.__connex.close_connection()
 
-        cursor = self.__connex.get_connection().cursor()
-        query = f"insert into usuarios(nombre, clave) values(%s, %s)"
-        query_data = (nombre, clave)
-        cursor.execute(query, query_data)
-        self.__connex.get_connection().commit()
-        cursor.close()
-        self.__connex.close_connection()
-    
+            return True
+        except:
+            return False
+        
     def buscar_usuario(self, nombre, clave):
         cursor = self.__connex.get_connection().cursor()
         query = "select * from usuarios where nombre=%s and clave=%s"

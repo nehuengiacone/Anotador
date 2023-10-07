@@ -42,17 +42,18 @@ class UsuarioController:
         self.__nombre = nombre
         self.__clave = clave
 
-        if(self.__validar_existencia(nombre)):
-            self.__usuario_repositorio.guardar_usuario(self.__nombre, self.__clave)
-            return True
-        else:
+        if(self.__validar_existencia(nombre) == True):
             return False
+        
+        print(f"VALIDACION VERDADERA {self.__usuario_repositorio.guardar_usuario(self.__nombre, self.__clave)}")
+        return True
 
     def __validar_existencia(self, nombre):
         respuesta = self.__usuario_repositorio.buscar_nombre_usuario(nombre)
-
-        if(nombre in respuesta):
-            return True
+        print(respuesta)
+        if(respuesta != []):
+            if(nombre in respuesta[0]):
+                return True
         
         return False
 
