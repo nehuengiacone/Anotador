@@ -92,9 +92,9 @@ def entrar_modificar_nota():
 
 
 
-def entrar_buscar_nota():
+def entrar_buscar_nota(event, usuario:Usuario.Usuario):
     windows_definitions.buscar_nota.crear_ventana(windows_definitions.main.get_ventana())
-    widgets_definitions.buscar_nota_call()
+    widgets_definitions.buscar_nota_call(usuario)
 
 
 
@@ -114,10 +114,21 @@ def listar_notas():
 
 
 # # FUNCIONES DE EVENTOS PARA GRIDS
-def buscar_nota(widget:Grilla.Grid=None):
-    widget.insertar_filas([["compra","30/09/2023"]])
+def buscar_nota_por_titulo(evento, widget:Grilla.Grid, titulo:str, usuario:Usuario.Usuario):
+    widget.get_grid().delete(*widget.get_grid().get_children())
+    nota_controller = controllers_definitions.NotaController()
+    resultado = nota_controller.get_notas_por_titulo(titulo, usuario.get_id())
+    if(resultado[1]):
+        for registros in resultado[0]:
+            widget.insertar_filas([[registros[1],registros[3]]])
 
-def seleccionar(widget:Grilla.Grid=None):
+    else:
+        print("No se recuperó nada")
+
+
+
+
+def seleccionar(event, widget:Grilla.Grid):
     windows_definitions.nota.crear_ventana(windows_definitions.buscar_nota.get_ventana())
     widgets_definitions.nota_view_call()
 

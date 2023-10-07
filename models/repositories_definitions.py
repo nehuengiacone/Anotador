@@ -60,9 +60,17 @@ class notaRepositorio:
         except:
             return False
 
+    def get_notas_por_titulo(self, titulo:str, idusuario:int):
+        titulo = f"%{titulo}%"
+        cursor = self.__connex.get_connection().cursor()
+        query = "select * from nota where titulo like %s and idusuario=%s and habilitado=1"
+        query_data = (titulo, idusuario)
+        try:
+            cursor.execute(query, query_data)
+            resultado = cursor.fetchall()
+            cursor.close()
+            self.__connex.close_connection()
 
-# nr = notaRepositorio()
-
-# usuario = Usuario.Usuario(1, "NEHUEN", "1234")
-
-# nr.guardar_nota("Prueba", "Soy una bendita nota de prueba. ¡LA PRIMERA!", usuario)
+            return (resultado, True)
+        except:
+            return (resultado, False)

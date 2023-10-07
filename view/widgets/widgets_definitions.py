@@ -51,7 +51,7 @@ def call_login():
 #MAIN CALL
 def call_main(usuario:Usuario.Usuario):
     # INSTANCIAS DE WIDGETS
-    print(f"BIENVENIDO {usuario.get_nombre()}!!!! {usuario.get_id()}")
+    print(f"BIENVENIDO!!!!\nUsuario : {usuario.get_nombre()}\nID : {usuario.get_id()}")
     btn_crear_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Crear Nota", bgcolor='pale green', borde=2, tborde='raised')
     btn_buscar_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Buscar Nota", bgcolor='lightblue', borde=2, tborde='raised')
     btn_listar_nota = Boton.Boton(ventana=windows_definitions.main, width=15, height=2, texto="Listar Nota", bgcolor='lightblue', borde=2, tborde='raised')
@@ -66,8 +66,8 @@ def call_main(usuario:Usuario.Usuario):
     btn_salir.crear_boton(260, 130)
     # btn_crear_nota.evento(events_definitions.entrar_crear_nota)
     btn_crear_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_crear_nota(event, usuario))
-    # btn_modificar_nota.evento(events_definitions.entrar_modificar_nota)
-    btn_buscar_nota.evento(events_definitions.entrar_buscar_nota)
+    # btn_buscar_nota.evento(events_definitions.entrar_buscar_nota)
+    btn_buscar_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.entrar_buscar_nota(event, usuario))
     btn_listar_nota.evento(events_definitions.listar_notas)
     btn_salir.evento(events_definitions.cerrar_programa)
 
@@ -118,7 +118,7 @@ def crear_nota_call(usuario:Usuario.Usuario):
 
 
 #BUSCAR NOTA CALL
-def buscar_nota_call():
+def buscar_nota_call(usuario:Usuario.Usuario):
     # INSTANCIAS DE WIDGETS
     lbl_titulo = Label(windows_definitions.buscar_nota.get_ventana(), text="Titulo")
     ent_buscar = Entrada.Entrada(ventana=windows_definitions.buscar_nota, width=40, value="Buscar por Titulo ...")
@@ -130,8 +130,9 @@ def buscar_nota_call():
     ent_buscar.crear_entrada(x=80, y=20)
     btn_buscar.crear_boton(x=190, y=50)
     grid_resultados.crear_grid()
-    btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)
-    grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.seleccionar(widget=grid_resultados))
+    # btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)
+    btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.buscar_nota_por_titulo(event, grid_resultados, ent_buscar.get_valor(), usuario))
+    grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.seleccionar(event, grid_resultados))
 
 
 
@@ -140,7 +141,7 @@ def buscar_nota_call():
 
 
 #LISTAR NOTA CALL
-def listar_notas_call():
+def listar_notas_call(usuario:Usuario.Usuario):
     # INSTANCIAS DE WIDGETS
     lbl_titulo = Label(windows_definitions.listar_notas.get_ventana(), text="Listado de Notas")
     btn_buscar = Boton.Boton(ventana=windows_definitions.listar_notas, width=15, height=2, texto="Buscar", bgcolor='lightblue', borde=2, tborde='raised')
@@ -152,7 +153,8 @@ def listar_notas_call():
     btn_buscar.crear_boton(x=90, y=50)
     btn_modificar_nota.crear_boton(x=390, y=50)
     grid_resultados.crear_grid()
-    btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)    
+    # btn_buscar.evento(wevento=events_definitions.buscar_nota_por_titulo, widget=grid_resultados)    
+    btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.buscar_nota_por_titulo(event, grid_resultados, usuario))
     btn_modificar_nota.evento(events_definitions.entrar_modificar_nota)
 
 

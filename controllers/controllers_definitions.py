@@ -65,8 +65,11 @@ class NotaController:
     def set_nota_nueva(self, titulo:str, cuerpo:str, idusuario:int):
         return self.__nota_repositorio.guardar_nota(titulo, cuerpo, idusuario)
 
+    def get_notas_por_titulo(self, titulo:str, idusuario:int):
+        return self.__nota_repositorio.get_notas_por_titulo(titulo, idusuario)
+    
 
 
-uc = UsuarioController()
+# nc = NotaController()
 
-print(uc.get_usuario("nehuen", "1234"))
+# print(nc.get_notas_por_titulo("prue", 1))
