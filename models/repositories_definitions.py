@@ -37,6 +37,16 @@ class UsuarioRepositorio:
         self.__connex.close_connection()
 
         return resultado
+    
+    def buscar_nombre_usuario(self, nombre):
+        cursor = self.__connex.get_connection().cursor()
+        query = "select nombre from usuarios where nombre=%s"
+        query_data = tuple([nombre])
+        cursor.execute(query, query_data)
+        resultado = cursor.fetchall()
+        cursor.close()
+
+        return resultado
 
 
 class notaRepositorio:
@@ -65,6 +75,20 @@ class notaRepositorio:
         cursor = self.__connex.get_connection().cursor()
         query = "select * from nota where titulo like %s and idusuario=%s and habilitado=1"
         query_data = (titulo, idusuario)
+        try:
+            cursor.execute(query, query_data)
+            resultado = cursor.fetchall()
+            cursor.close()
+            self.__connex.close_connection()
+
+            return (resultado, True)
+        except:
+            return (resultado, False)
+        
+    def get_notas_todas(self, idusuario:int):
+        cursor = self.__connex.get_connection().cursor()
+        query = "select * from nota where idusuario=%s and habilitado=1"
+        query_data = tuple([idusuario])
         try:
             cursor.execute(query, query_data)
             resultado = cursor.fetchall()

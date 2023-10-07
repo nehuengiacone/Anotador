@@ -41,8 +41,21 @@ class UsuarioController:
     def set_usuario(self, nombre:str, clave:str):
         self.__nombre = nombre
         self.__clave = clave
-        self.__usuario_repositorio.guardar_usuario(self.__nombre, self.__clave)
-    
+
+        if(self.__validar_existencia(nombre)):
+            self.__usuario_repositorio.guardar_usuario(self.__nombre, self.__clave)
+            return True
+        else:
+            return False
+
+    def __validar_existencia(self, nombre):
+        respuesta = self.__usuario_repositorio.buscar_nombre_usuario(nombre)
+
+        if(nombre in respuesta):
+            return True
+        
+        return False
+
 
     def get_usuario(self, nombre, clave):
         respuesta = self.__usuario_repositorio.buscar_usuario(nombre, clave)
@@ -67,7 +80,9 @@ class NotaController:
 
     def get_notas_por_titulo(self, titulo:str, idusuario:int):
         return self.__nota_repositorio.get_notas_por_titulo(titulo, idusuario)
-        
+    
+    def get_notas_todas(self, idusuario:int):
+        return self.__nota_repositorio.get_notas_todas(idusuario)
 
 # nc = NotaController()
 

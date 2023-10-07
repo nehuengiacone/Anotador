@@ -133,9 +133,10 @@ def buscar_nota_call(usuario:Usuario.Usuario):
     btn_buscar.crear_boton(x=190, y=50)
     grid_resultados.crear_grid()
     # btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)
+   
     btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.buscar_nota_por_titulo(event, grid_resultados, ent_buscar.get_valor(), usuario))
     grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.buscar_nota_por_titulo_seleccionar(event, grid_resultados.fila_seleccionada(), events_definitions.notas))
-    windows_definitions.buscar_nota.get_ventana().protocol("WM_DELETE_WINDOW", lambda:events_definitions.reset_notas(grid_resultados))
+    windows_definitions.buscar_nota.get_ventana().protocol("WM_DELETE_WINDOW", lambda:events_definitions.buscar_nota_reset_notas(grid_resultados))
 
 
 
@@ -157,8 +158,11 @@ def listar_notas_call(usuario:Usuario.Usuario):
     btn_modificar_nota.crear_boton(x=390, y=50)
     grid_resultados.crear_grid()
     # btn_buscar.evento(wevento=events_definitions.buscar_nota_por_titulo, widget=grid_resultados)    
-    btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.buscar_nota_por_titulo(event, grid_resultados, usuario))
+   
+    btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.listar_notas_listar(event, grid_resultados, usuario))
+    grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.listar_notas_listar_seleccionar(event, grid_resultados.fila_seleccionada(), events_definitions.notas))
     btn_modificar_nota.evento(events_definitions.entrar_modificar_nota)
+    windows_definitions.listar_notas.get_ventana().protocol("WM_DELETE_WINDOW", lambda:events_definitions.listar_notas_reset_notas(grid_resultados))
 
 
 
