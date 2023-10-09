@@ -165,13 +165,12 @@ def listar_notas_call(usuario:Usuario.Usuario):
     lbl_titulo.place(x=250 ,y=20)
     btn_buscar.crear_boton(x=90, y=50)
     btn_modificar_nota.crear_boton(x=390, y=50)
-    grid_resultados.crear_grid()
-    # btn_buscar.evento(wevento=events_definitions.buscar_nota_por_titulo, widget=grid_resultados)    
+    grid_resultados.crear_grid()  
    
     # LLAMADA A EVENTOS
     btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.listar_notas_listar(event, grid_resultados, usuario))
     grid_resultados.get_grid().bind("<Double-1>", lambda event:events_definitions.listar_notas_listar_seleccionar(event, grid_resultados.fila_seleccionada(), events_definitions.notas))
-    btn_modificar_nota.evento(events_definitions.entrar_modificar_nota)
+    btn_modificar_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.listar_notas_modificar_seleccionar(event, grid_resultados.fila_seleccionada(), usuario))
     windows_definitions.listar_notas.get_ventana().protocol("WM_DELETE_WINDOW", lambda:events_definitions.listar_notas_reset_notas(grid_resultados))
 
 
@@ -182,9 +181,10 @@ def listar_notas_call(usuario:Usuario.Usuario):
 
 
 #MODIFICAR NOTA CALL
-def modificar_nota_call():
+def modificar_nota_call(usuario:Usuario.Usuario, key):
+    print(key)
     # INSTANCIAS DE WIDGETS
-    ent_titulo = Entrada.Entrada(ventana=windows_definitions.modificar_nota, width=40, value="Titulo ...", read=True)
+    ent_titulo = Entrada.Entrada(ventana=windows_definitions.modificar_nota, width=40, value=events_definitions.notas[key].get_titulo(), read=True)
     btn_modificar_nota = Boton.Boton(ventana=windows_definitions.modificar_nota, width=30, height=2, texto="Guardar", bgcolor='lightblue', borde=2, tborde='raised')
     txt_cuerpo = Text(windows_definitions.modificar_nota.get_ventana(), width=40)
 
@@ -194,7 +194,7 @@ def modificar_nota_call():
     btn_modificar_nota.crear_boton(90, 500)
 
     # LLAMADA A EVENTOS
-    btn_modificar_nota.evento(events_definitions.guardar_nota)
+    btn_modificar_nota.get_boton().bind("<Button-1>", lambda event:events_definitions.guardar_nota(event, txt_cuerpo.get('1.0', "end-1c"), key, usuario))
 
 
 
@@ -203,15 +203,15 @@ def modificar_nota_call():
 
 
 #NOTA CALL
-def nota_call():
+def nota_call(key):
     # INSTANCIAS DE WIDGETS
     txt_cuerpo = Text(windows_definitions.nota.get_ventana(), width=40, height=20, state="normal")
-    txt_cuerpo.insert(END, "Hola Mundo!!!!")
+    txt_cuerpo.insert(END, events_definitions.notas[key].get_cuerpo())
     txt_cuerpo.configure(state="disabled", bg="lightgrey")
 
     # CREACION DE WIDGETS
     txt_cuerpo.place(x=2, y=1)
-
+    txt_cuerpo.pack(fill="both", expand=1)
 
 
 

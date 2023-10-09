@@ -168,6 +168,7 @@ class Ventana:
             self.__completa = False
             coords = self.__centrar_objeto()
             self.__ventana.geometry(f"{self.__width}x{self.__height}+{coords['x']}+{coords['y']}")
+            # self.__ventana.geometry(f"{self.__width}x{self.__height}")
             self.__ventana.overrideredirect(False)
         else:
             self.__completa = True

@@ -73,6 +73,36 @@ class notaRepositorio:
             return True
         except:
             return False
+        
+    def actualizar_nota(self, id_nota:int, titulo:str, cuerpo:str, idusuario:int):
+        print(f"{id_nota} {idusuario}")
+        cursor = self.__connex.get_connection().cursor()
+        query_insert = "insert into nota(titulo, cuerpo, fecha_audit, idusuario, habilitado) values(%s, %s, %s, %s, %s)"
+        query_update = "update nota set habilitado=0 where idnota=%s and idusuario=%s"
+        query_data_insert = (titulo, cuerpo, datetime.date.today(), idusuario, 1)
+        query_data_update = (id_nota, idusuario)
+
+        try:
+            cursor.execute(query_insert, query_data_insert)
+            self.__connex.get_connection().commit()
+            print("confirmo el insert")
+
+            try:
+                cursor.execute(query_update, query_data_update)
+                self.__connex.get_connection().commit()
+                print("confirmo el update")
+                cursor.close()
+                self.__connex.close_connection()
+                return True
+            except:
+                cursor.close()
+                self.__connex.close_connection()
+                return False
+        except:
+            cursor.close()
+            self.__connex.close_connection()
+            return False
+        
 
     def get_notas_por_titulo(self, titulo:str, idusuario:int):
         titulo = f"%{titulo}%"

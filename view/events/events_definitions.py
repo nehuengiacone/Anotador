@@ -105,10 +105,10 @@ def crear_nota_crear_nota(event, entradas, usuario:Usuario.Usuario):
 
 
 
-def entrar_modificar_nota():
+def entrar_modificar_nota(evento, usuario:Usuario.Usuario, nota_seleccionada:tuple):
     windows_definitions.modificar_nota.crear_ventana(windows_definitions.main.get_ventana())
     windows_definitions.nota.crear_ventana(windows_definitions.main.get_ventana())
-    widgets_definitions.modificar_nota_call()
+    widgets_definitions.modificar_nota_call(usuario, nota_seleccionada)
     widgets_definitions.nota_call()
 
 
@@ -121,10 +121,16 @@ def entrar_buscar_nota(event, usuario:Usuario.Usuario):
 
 
 
-def guardar_nota():
-    windows_definitions.modificar_nota.cerrar_ventana()
-    windows_definitions.nota.cerrar_ventana()
-
+def guardar_nota(evento, cuerpo:str, key, usuario:Usuario.Usuario):
+    nota_controller = controllers_definitions.NotaController()
+    respuesta = nota_controller.set_nota_modificada(notas[key].get_id(), notas[key].get_titulo(), cuerpo, usuario.get_id())
+    print(respuesta)
+    if(respuesta):
+        messagebox.showinfo(message="La Nota a sido actualizada.", title="Modificar Nota")
+        windows_definitions.modificar_nota.cerrar_ventana()
+        windows_definitions.nota.cerrar_ventana()
+    else:
+        messagebox.showerror(message="No se pudo realizar la operación.", title="Modificar Nota")
 
 
 
@@ -146,7 +152,7 @@ def buscar_nota_por_titulo(evento, widget:Grilla.Grid, titulo:str, usuario:Usuar
     resultado = nota_controller.get_notas_por_titulo(titulo, usuario.get_id())
     if(resultado[1]):
         for registros in resultado[0]:
-            nota = Nota.Nota(registros[1], registros[2])
+            nota = Nota.Nota(registros[0], registros[1], registros[2])
             id_fila = widget.insertar_fila([registros[1],registros[3]])
             notas.setdefault(id_fila, nota)
     else:
@@ -169,6 +175,19 @@ def buscar_nota_por_titulo_seleccionar(event, seleccion:tuple, notas:dict):
         print("No existe seleccion")
 
 
+def listar_notas_modificar_seleccionar(event, seleccion:tuple, usuario:Usuario.Usuario):
+    if(seleccion[0] != ()):
+        if(seleccion[0][0] in notas.keys()):
+            print("Existe key para nota seleccionada")
+            key = seleccion[0][0]
+            windows_definitions.modificar_nota.crear_ventana(windows_definitions.listar_notas.get_ventana())
+            widgets_definitions.modificar_nota_call(usuario, key)
+            windows_definitions.nota.crear_ventana(windows_definitions.listar_notas.get_ventana())
+            widgets_definitions.nota_call(key)
+        else:
+            print("No existe key")
+    else:
+        print("No existe seleccion")
 
 
 def listar_notas_listar(evento, widget:Grilla.Grid, usuario:Usuario.Usuario):
@@ -178,7 +197,7 @@ def listar_notas_listar(evento, widget:Grilla.Grid, usuario:Usuario.Usuario):
     print(resultado)
     if(resultado[1]):
         for registros in resultado[0]:
-            nota = Nota.Nota(registros[1], registros[2])
+            nota = Nota.Nota(registros[0], registros[1], registros[2])
             id_fila = widget.insertar_fila([registros[1],registros[3]])
             notas.setdefault(id_fila, nota)
     else:

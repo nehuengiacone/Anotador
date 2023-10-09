@@ -78,6 +78,10 @@ class NotaController:
 
     def set_nota_nueva(self, titulo:str, cuerpo:str, idusuario:int):
         return self.__nota_repositorio.guardar_nota(titulo, cuerpo, idusuario)
+    
+    def set_nota_modificada(self, id_nota:int, titulo:str, cuerpo:str, idusuario:int):
+        print(f"id nota : {id_nota}\ttitulo: {titulo}\ncuerpo : {cuerpo}\nidusuario : {idusuario}")
+        return self.__nota_repositorio.actualizar_nota(id_nota, titulo, cuerpo, idusuario)
 
     def get_notas_por_titulo(self, titulo:str, idusuario:int):
         return self.__nota_repositorio.get_notas_por_titulo(titulo, idusuario)
@@ -85,6 +89,6 @@ class NotaController:
     def get_notas_todas(self, idusuario:int):
         return self.__nota_repositorio.get_notas_todas(idusuario)
 
-# nc = NotaController()
+nc = NotaController()
 
-# print(nc.get_notas_por_titulo("prue", 1))
+print(nc.get_notas_todas(1))
