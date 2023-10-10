@@ -88,7 +88,3 @@ class NotaController:
     
     def get_notas_todas(self, idusuario:int):
         return self.__nota_repositorio.get_notas_todas(idusuario)
-
-nc = NotaController()
-
-print(nc.get_notas_todas(1))

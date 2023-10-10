@@ -140,7 +140,7 @@ def buscar_nota_call(usuario:Usuario.Usuario):
     ent_buscar.crear_entrada(x=80, y=20)
     btn_buscar.crear_boton(x=190, y=50)
     grid_resultados.crear_grid()
-    # btn_buscar.evento(wevento=events_definitions.buscar_nota,widget=grid_resultados)
+    grid_resultados.set_scroll(583)  
 
     # LLAMADA A EVENTOS
     btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.buscar_nota_por_titulo(event, grid_resultados, ent_buscar.get_valor(), usuario))
@@ -165,7 +165,8 @@ def listar_notas_call(usuario:Usuario.Usuario):
     lbl_titulo.place(x=250 ,y=20)
     btn_buscar.crear_boton(x=90, y=50)
     btn_modificar_nota.crear_boton(x=390, y=50)
-    grid_resultados.crear_grid()  
+    grid_resultados.crear_grid()
+    grid_resultados.set_scroll(583)  
    
     # LLAMADA A EVENTOS
     btn_buscar.get_boton().bind("<Button-1>", lambda event:events_definitions.listar_notas_listar(event, grid_resultados, usuario))

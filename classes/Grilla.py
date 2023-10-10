@@ -129,3 +129,9 @@ class Grid:
     
     def get_filas_id(self):
         return self.__id_fila
+    
+    def set_scroll(self, posx:int=0, posy:int=0):
+        sc = tkinter.Scrollbar(self.__grid, orient="vertical")
+        sc.place(height=300, bordermode="ignore", x=posx)
+        self.__grid.config(yscrollcommand=sc.set)
+        sc.config(command=self.__grid.yview)
